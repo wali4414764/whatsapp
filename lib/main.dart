@@ -23,5 +23,3 @@ class WhatsAppApp extends StatelessWidget {
     );
   }
 }
-
-

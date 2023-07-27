@@ -23,8 +23,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (_selectedCountryCode == null || _phoneNumberController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text(
-                'Please enter valid phone number and select country code.')),
+          content:
+              Text('Please enter valid phone number and select country code.'),
+        ),
       );
       return;
     }
@@ -95,11 +96,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text('Verify Your Phone Number',
-            style: TextStyle(
-              color: Color(0xFF075e54),
-              fontWeight: FontWeight.bold,
-            )
+        title: Text(
+          'Verify Your Phone Number',
+          style: TextStyle(
+            color: Color(0xFF075e54),
+            fontWeight: FontWeight.bold,
+          ),
         ),
         elevation: 0,
       ),
@@ -110,7 +112,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              'WhatsApp will send an SMS message(Carrier charges may apply) to verify your phone number. Enter your country code and phone number:',
+              'WhatsApp will send an SMS message (Carrier charges may apply) to verify your phone number. Enter your country code and phone number:',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 16),
             ),
@@ -124,7 +126,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               initialSelection: 'US', // Initial country code selection
               favorite: [
                 '+1',
-                'US'
+                'US',
               ], // Optional: Add your favorite country codes
             ),
             SizedBox(height: 16),
@@ -133,21 +135,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Phone Number',
-                prefixIcon: Icon(Icons.phone),
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.green),
+                prefixIcon:Theme(
+                  data: ThemeData(primaryColor: Colors.green), // Green prefix icon color
+                  child: Icon(Icons.phone),),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
               ),
             ),
             SizedBox(height: 55),
             ElevatedButton(
               onPressed: () => _verifyPhoneNumber(context),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),),
-              child: Text('Next',),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              ),
+              child: Text('Next'),
             ),
             SizedBox(height: 16),
             Text(
-              'you must be at least 16 years old to register',
-              style: TextStyle(fontSize: 15,color: Colors.grey),
+              'You must be at least 16 years old to register',
+              style: TextStyle(fontSize: 15, color: Colors.grey),
             ),
           ],
         ),

@@ -19,9 +19,11 @@ Route<dynamic>? onGenerateRoute(RouteSettings settings) {
       }
       break;
     case '/home':
-      if (args is String) {
+      if (args is Map<String, dynamic>) { // Check if args is a map of dynamic type
         return MaterialPageRoute(
-          builder: (_) => WhatsAppHomePage(userId: args),
+          builder: (_) => WhatsAppHomePage(
+            userId: args['firstName'], // Pass the userId here (you can use 'firstName' or any other key you prefer)
+          ),
         );
       }
       break;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'registration_page.dart';
 import 'whatsapp_home_page.dart';
-
+import 'profile_setup_page.dart';
 class VerificationCodePage extends StatefulWidget {
   final String? verificationId;
 
@@ -26,15 +26,16 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
       );
 
       try {
-        UserCredential userCredential = await _auth.signInWithCredential(credential);
+        UserCredential userCredential =
+        await _auth.signInWithCredential(credential);
         // Authentication successful, handle navigation or other actions
         print("User signed in: ${userCredential.user?.phoneNumber}");
-        // Navigate to the next screen or perform necessary actions
-        Navigator.pushNamedAndRemoveUntil(
+        // Navigate to the profile setup page
+        Navigator.push(
           context,
-          '/home',
-              (route) => false,
-          arguments: userCredential.user?.uid, // Pass the userId here
+          MaterialPageRoute(
+            builder: (_) => ProfileSetupPage(),
+          ),
         );
       } on FirebaseAuthException catch (e) {
         // Handle authentication errors
@@ -56,8 +57,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             style: TextStyle(
               color: Color(0xFF075e54),
               fontWeight: FontWeight.bold,
-            )
-        ),
+            )),
         elevation: 0,
       ),
       body: Padding(
@@ -71,15 +71,25 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Verification Code',
-                prefixIcon: Icon(Icons.lock),
-                border: OutlineInputBorder(),
+                labelStyle: TextStyle(color: Colors.green),
+                prefixIcon: Icon(
+                  Icons.lock,
+                  color: Colors.green,
+                ),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.green),
+                ),
               ),
             ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => _submitVerificationCode(context),
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),),
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              ),
               child: Text('Submit'),
             ),
           ],
