@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'registration_page.dart';
-import 'whatsapp_home_page.dart';
-import 'profile_setup_page.dart';
+import 'package:whatsapp/presentation/pages/profile_setup_page.dart';
+import 'package:whatsapp/presentation/pages/whatsapp_home_page.dart';
+
+
+
 class VerificationCodePage extends StatefulWidget {
   final String? verificationId;
 
@@ -30,13 +32,24 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
         await _auth.signInWithCredential(credential);
         // Authentication successful, handle navigation or other actions
         print("User signed in: ${userCredential.user?.phoneNumber}");
-        // Navigate to the profile setup page
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => ProfileSetupPage(),
-          ),
-        );
+
+        // Check if the user is a new user (first-time login) and navigate to the profile setup page
+        if (userCredential.additionalUserInfo?.isNewUser == true) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => ProfileSetupPage(),
+            ),
+          );
+        } else {
+          // User is an existing user, navigate to the WhatsAppHomePage
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (_) => WhatsAppHomePage(userId: userCredential.user!.uid),
+            ),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         // Handle authentication errors
         print("Authentication failed: ${e.message}");

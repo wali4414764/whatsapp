@@ -42,7 +42,7 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
     Navigator.pushNamedAndRemoveUntil(
       context,
       '/home',
-      (route) => false,
+          (route) => false,
       arguments: {
         'firstName': firstName,
         'lastName': lastName,
@@ -90,51 +90,50 @@ class _ProfileSetupPageState extends State<ProfileSetupPage> {
               ),
             SizedBox(height: 16),
             ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'Choose Profile Picture',
-
-                        ),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                              leading: Icon(Icons.camera),
-                              title: Text(
-                                'Take a new picture',
-                              ),
-                              onTap: () {
-                                _openCamera();
-                                Navigator.of(context).pop();
-                              },
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text(
+                        'Choose Profile Picture',
+                      ),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            leading: Icon(Icons.camera),
+                            title: Text(
+                              'Take a new picture',
                             ),
-                            ListTile(
-                              leading: Icon(Icons.photo),
-                              title: Text(
-                                'Choose from gallery',
-                              ),
-                              onTap: () {
-                                _openGallery();
-                                Navigator.of(context).pop();
-                              },
+                            onTap: () {
+                              _openCamera();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.photo),
+                            title: Text(
+                              'Choose from gallery',
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-                child: Text(
-                  'Select Profile Picture',
-                ),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.green),
-                )),
+                            onTap: () {
+                              _openGallery();
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
+              child: Text(
+                'Select Profile Picture',
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+              ),
+            ),
             SizedBox(height: 16),
             TextFormField(
               controller: _firstNameController,

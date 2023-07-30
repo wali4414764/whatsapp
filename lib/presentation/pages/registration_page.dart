@@ -23,15 +23,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (_selectedCountryCode == null || _phoneNumberController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content:
-              Text('Please enter valid phone number and select country code.'),
+          content: Text('Please enter valid phone number and select country code.'),
         ),
       );
       return;
     }
 
-    String phoneNumber =
-        '${_selectedCountryCode!.dialCode}${_phoneNumberController.text}';
+    String phoneNumber = '${_selectedCountryCode!.dialCode}${_phoneNumberController.text}';
 
     await _auth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
@@ -41,8 +39,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         await _auth.signInWithCredential(credential);
         print("Verification completed automatically: ${credential.smsCode}");
         _saveRegistrationStatus(); // Save registration status in shared preferences
-        widget
-            .onRegistrationComplete!(); // Call the callback on successful registration
+        widget.onRegistrationComplete!(); // Call the callback on successful registration
       },
       verificationFailed: (FirebaseAuthException e) {
         // Handle verification failure (e.g., invalid phone number).
@@ -58,8 +55,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                VerificationCodePage(verificationId: verificationId),
+            builder: (context) => VerificationCodePage(verificationId: verificationId),
           ),
         );
       },
@@ -136,9 +132,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               decoration: InputDecoration(
                 labelText: 'Phone Number',
                 labelStyle: TextStyle(color: Colors.green),
-                prefixIcon:Theme(
-                  data: ThemeData(primaryColor: Colors.green), // Green prefix icon color
-                  child: Icon(Icons.phone),),
+                prefixIcon: Icon(Icons.phone, color: Colors.green),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.green),
                 ),
@@ -150,10 +144,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
             SizedBox(height: 55),
             ElevatedButton(
               onPressed: () => _verifyPhoneNumber(context),
+              child: Text('Next'),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
               ),
-              child: Text('Next'),
             ),
             SizedBox(height: 16),
             Text(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'firebase_service.dart';
-import 'message_model.dart';
+import 'package:whatsapp/data/model/message.dart';
+import 'package:whatsapp/data/sources/firebase_service.dart';
+
 
 class ChatList extends StatefulWidget {
   final String userId;
@@ -20,11 +21,15 @@ class _ChatListState extends State<ChatList> {
       stream: _firebaseService.getMessages(widget.userId),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
         }
 
         List<Message> messages = snapshot.data ?? [];

@@ -1,10 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'message_model.dart';
+import 'package:whatsapp/data/model/message.dart';
+import 'package:dartz/dartz.dart';
+
+// Define the Failure class
+class Failure {
+  final String message;
+  Failure(this.message);
+}
 
 class FirebaseService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> sendMessage(Message message) async {
+  Future<Either<Failure, void>> sendMessage(Message message) async {
     try {
       await _firestore.collection('messages').doc(message.id).set({
         'text': message.text,
@@ -12,8 +19,10 @@ class FirebaseService {
         'receiverId': message.receiverId,
         'timestamp': message.timestamp,
       });
+      return Right(null); // Return Right to indicate success
     } catch (e) {
       print("Error sending message: $e");
+      return Left(Failure("Error sending message"));
     }
   }
 
